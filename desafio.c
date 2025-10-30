@@ -1,4 +1,4 @@
-// Torre -> for | Bispo -> while | Rainha -> do-while
+// Torre -> for | Bispo -> while | Rainha -> do-while | Cavalo -> loops aninhados
 
 #include <stdio.h>
 
@@ -32,6 +32,23 @@ int main() {
         printf("Esquerda\n");
         contadorRainha++;
     } while (contadorRainha <= casasRainha);
+
+    // separação dos movimentos anteriores
+    printf("\n");
+
+    // CAVALO: 2 casas para baixo e 1 para a esquerda
+    int movimentosVerticais = 2;   // duas casas para baixo
+
+    printf("=== Movimento do CAVALO (for + while) ===\n");
+    for (int mv = 1; mv <= movimentosVerticais; mv++) {  // loop externo (for)
+        int passo = 1;
+        while (passo <= 1) {                              // loop interno (while)
+            printf("Baixo\n");
+            passo++;
+        }
+    }
+
+    printf("Esquerda\n");
 
     return 0;
 }
