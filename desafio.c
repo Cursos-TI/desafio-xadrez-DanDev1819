@@ -1,54 +1,74 @@
-// Torre -> for | Bispo -> while | Rainha -> do-while | Cavalo -> loops aninhados
+// Movimentos das peças usando recursão e loops
 
 #include <stdio.h>
 
-int main() {
+// torre: repete "Direita" N vezes
+void moverTorreRec(int casas) {
+    if (casas <= 0) return;
+    printf("Direita\n");
+    moverTorreRec(casas - 1);
+}
 
-    // TORRE: 5 casas para a direita (for)
-    int casasTorre = 5;
-    printf("=== Movimento da TORRE (for) ===\n");
-    for (int i = 1; i <= casasTorre; i++) {
-        printf("Direita\n");
-    }
+// bispo: diagonal (cima + direita)
+void moverBispoRec(int casas) {
+    if (casas <= 0) return;
 
-    printf("\n");
-
-    // BISPO: 5 casas na diagonal para cima e direita (while)
-    int casasBispo = 5;
-    int contadorBispo = 1;
-    printf("=== Movimento do BISPO (while) ===\n");
-    while (contadorBispo <= casasBispo) {
-        printf("Cima Direita\n");
-        contadorBispo++;
-    }
-
-    printf("\n");
-
-    // RAINHA: 8 casas para a esquerda (do-while)
-    int casasRainha = 8;
-    int contadorRainha = 1;
-    printf("=== Movimento da RAINHA (do-while) ===\n");
-    do {
-        printf("Esquerda\n");
-        contadorRainha++;
-    } while (contadorRainha <= casasRainha);
-
-    // separação dos movimentos anteriores
-    printf("\n");
-
-    // CAVALO: 2 casas para baixo e 1 para a esquerda
-    int movimentosVerticais = 2;   // duas casas para baixo
-
-    printf("=== Movimento do CAVALO (for + while) ===\n");
-    for (int mv = 1; mv <= movimentosVerticais; mv++) {  // loop externo (for)
-        int passo = 1;
-        while (passo <= 1) {                              // loop interno (while)
-            printf("Baixo\n");
-            passo++;
+    for (int i = 0; i < 1; i++) {        // “cima”
+        for (int j = 0; j < 1; j++) {    // “direita”
+            printf("Cima Direita\n");
         }
     }
 
+    moverBispoRec(casas - 1);
+}
+
+// rainha: anda pra esquerda
+void moverRainhaRec(int casas) {
+    if (casas <= 0) return;
     printf("Esquerda\n");
+    moverRainhaRec(casas - 1);
+}
+
+// cavalo: 2 pra cima e 1 pra direita
+// usando for com 2 variáveis + while
+void moverCavaloComplexo(void) {
+    int maxCima = 2;
+    int maxDir = 1;
+
+    printf("=== Movimento do CAVALO (loops) ===\n");
+
+    for (int cima = 0, dir = 0; (cima < maxCima) || (dir < maxDir); ) {
+
+        while (cima < maxCima) {
+            printf("Cima\n");
+            cima++;
+        }
+
+        if (cima >= maxCima) {
+            if (dir >= maxDir) break;
+            printf("Direita\n");
+            dir++;
+            continue;
+        }
+    }
+}
+
+int main() {
+    int casasTorre = 5;
+    int casasBispo = 5;
+    int casasRainha = 8;
+
+    printf("=== Movimento da TORRE ===\n");
+    moverTorreRec(casasTorre);
+
+    printf("\n=== Movimento do BISPO ===\n");
+    moverBispoRec(casasBispo);
+
+    printf("\n=== Movimento da RAINHA ===\n");
+    moverRainhaRec(casasRainha);
+
+    printf("\n");
+    moverCavaloComplexo();
 
     return 0;
 }
